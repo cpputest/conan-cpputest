@@ -1,46 +1,55 @@
-from conans import ConanFile, CMake, tools
+from os import path
+from conans import ConanFile, CMake
 
 
-class CpputestConan(ConanFile):
+class CppUTest(ConanFile):
     name = "CppUTest"
-    version = "master"
-    license = "<Put the package license here>"
-    url = "<Package recipe repository url here, for issues about the package>"
-    description = "<Description of Cpputest here>"
-    settings = "os", "compiler", "build_type", "arch"
-    options = {"shared": [True, False]}
-    default_options = "shared=False"
-    generators = "cmake"
+    version = "3.8"
+    description = """C /C++ based unit xUnit test framework for unit testing and for test-driving your code"""
+    license = "BSD 3-clause \"New\" or \"Revised\" License, https://github.com/cpputest/cpputest/blob/master/COPYING"
+    url = "https://cpputest.github.io"
+    settings = "os", "compiler", "arch", "build_type"
+    source_dir = "{name}-{version}".format(name=name, version=version)
+    options = {
+        "shared": [True, False],
+        "include_pdbs": [True, False],
+        "fPIC": [True, False],
+        "tests": [True, False],
+        "extensions": [True, False]
+    }
+    default_options = (
+        "shared=False",
+        "include_pdbs=False",
+        "fPIC=False",
+        "tests=False",
+        "extensions=True"
+    )
+    scm = {
+        "type": "git",
+        "subfolder": source_dir,
+        "url": "https://github.com/cpputest/cpputest.git",
+        "revision": "tags/v{version}".format(version=version)
+    }
 
     def source(self):
-        self.run("git clone https://github.com/memsharded/hello.git")
-        self.run("cd hello && git checkout static_shared")
-        # This small hack might be useful to guarantee proper /MT /MD linkage
-        # in MSVC if the packaged project doesn't have variables to set it
-        # properly
-        tools.replace_in_file("hello/CMakeLists.txt", "PROJECT(MyHello)",
-                              '''PROJECT(MyHello)
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup()''')
+        pass
 
     def build(self):
         cmake = CMake(self)
-        cmake.configure(source_folder="hello")
+        #cmake.verbose = True
+        cmake.definitions["TESTS"] = self.options.tests
+        cmake.configure(source_dir=path.join(self.source_folder, self.source_dir))
         cmake.build()
-
-        # Explicit way:
-        # self.run('cmake %s/hello %s'
-        #          % (self.source_folder, cmake.command_line))
-        # self.run("cmake --build . %s" % cmake.build_config)
+        if self.options.tests:
+            cmake.test()
+        cmake.install()
 
     def package(self):
-        self.copy("*.h", dst="include", src="hello")
-        self.copy("*hello.lib", dst="lib", keep_path=False)
-        self.copy("*.dll", dst="bin", keep_path=False)
-        self.copy("*.so", dst="lib", keep_path=False)
-        self.copy("*.dylib", dst="lib", keep_path=False)
-        self.copy("*.a", dst="lib", keep_path=False)
+        pass
 
     def package_info(self):
-        self.cpp_info.libs = ["hello"]
-
+        self.cpp_info.libs = ["CppUTest"]
+        if self.options.extensions:
+            self.cpp_info.libs.append("CppUTestExt")
+        if self.settings.compiler == "Visual Studio":
+            self.cpp_info.libs.append("winmm.lib")

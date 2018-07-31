@@ -1,6 +1,6 @@
 #include <CppUTest/TestHarness.h>
-#include <CppUTestExt/TestRegistry.h>
-#include <CppUTestExt/CommandLineTestRunner.h>
+#include <CppUTest/TestRegistry.h>
+#include <CppUTest/CommandLineTestRunner.h>
 #include <CppUTestExt/MockSupportPlugin.h>
 
 TEST_GROUP(FirstTestGroup)
@@ -13,6 +13,7 @@ TEST(FirstTestGroup, FirstTest)
 }
 
 int main(int argc, const char** argv)
+{
     MockSupportPlugin mockPlugin;
     TestRegistry::getCurrentRegistry()->installPlugin(&mockPlugin);
 

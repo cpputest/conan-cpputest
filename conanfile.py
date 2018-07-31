@@ -21,7 +21,7 @@ class CppUTest(ConanFile):
         "shared=False",
         "include_pdbs=False",
         "fPIC=False",
-        "tests=False",
+        "tests=True",
         "extensions=True"
     )
     scm = {
@@ -33,21 +33,27 @@ class CppUTest(ConanFile):
     if version == "master":
         scm["revision"] = "master"
 
+    def my_cmake(self):
+        cmake = CMake(self)
+        #cmake.verbose = True
+        # Translate our test-enabling option to CppUTest's cmake option
+        cmake.definitions["TESTS"] = self.options.tests
+        cmake.configure(source_dir=path.join(self.source_folder, self.source_dir))
+        return cmake
+
     def source(self):
+        # No need to do anything here, since our scm definition does the work
         pass
 
     def build(self):
-        cmake = CMake(self)
-        #cmake.verbose = True
-        cmake.definitions["TESTS"] = self.options.tests
-        cmake.configure(source_dir=path.join(self.source_folder, self.source_dir))
+        cmake = self.my_cmake()
         cmake.build()
         if self.options.tests:
             cmake.test()
-        cmake.install()
 
     def package(self):
-        pass
+        cmake = self.my_cmake()
+        cmake.install()
 
     def package_info(self):
         self.cpp_info.libs = ["CppUTest"]

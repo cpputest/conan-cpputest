@@ -35,7 +35,7 @@ class CppUTest(ConanFile):
 
     def my_cmake(self):
         cmake = CMake(self)
-        #cmake.verbose = True
+        cmake.verbose = True
         # Translate our test-enabling option to CppUTest's cmake option
         cmake.definitions["TESTS"] = self.options.tests
         cmake.configure(source_dir=path.join(self.source_folder, self.source_dir))

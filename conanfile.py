@@ -4,7 +4,7 @@ from conans import ConanFile, CMake
 
 class CppUTest(ConanFile):
     name = "CppUTest"
-    version = "3.8"
+    version = "master" # "3.8"
     description = """C /C++ based unit xUnit test framework for unit testing and for test-driving your code"""
     license = "BSD 3-clause \"New\" or \"Revised\" License, https://github.com/cpputest/cpputest/blob/master/COPYING"
     url = "https://cpputest.github.io"
@@ -30,6 +30,8 @@ class CppUTest(ConanFile):
         "url": "https://github.com/cpputest/cpputest.git",
         "revision": "tags/v{version}".format(version=version)
     }
+    if version == "master":
+        scm["revision"] = "master"
 
     def source(self):
         pass

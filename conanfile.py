@@ -1,4 +1,4 @@
-from os import path
+import os
 from conans import ConanFile, CMake
 
 
@@ -35,10 +35,11 @@ class CppUTest(ConanFile):
 
     def my_cmake(self):
         cmake = CMake(self, set_cmake_flags=True)
-        # cmake.verbose = True
+        if os.environ.get('VERBOSE') == '1':
+            cmake.verbose = True
         # Translate our test-enabling option to CppUTest's cmake option
         cmake.definitions["TESTS"] = self.options.tests
-        cmake.configure(source_dir=path.join(self.source_folder, self.source_dir))
+        cmake.configure(source_dir=os.path.join(self.source_folder, self.source_dir))
         return cmake
 
     def source(self):

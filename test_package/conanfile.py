@@ -12,7 +12,8 @@ class CpputestTestConan(ConanFile):
         cmake = CMake(self)
         # Current dir is "test_package/build/<build_id>" and CMakeLists.txt is
         # in "test_package"
-        # cmake.verbose = True
+        if os.environ.get('VERBOSE') == '1':
+            cmake.verbose = True
         cmake.configure()
         cmake.build()
 

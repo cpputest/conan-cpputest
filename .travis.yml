@@ -5,7 +5,8 @@ env:
      - CONAN_USERNAME: "bryceschober"
      - CONAN_LOGIN_USERNAME: "bryceschober"
      - CONAN_CHANNEL: "testing"
-     
+     - CONAN_UPLOAD: "https://api.bintray.com/conan/bryceschober/bks-conan"
+
 linux: &linux
    os: linux
    sudo: required

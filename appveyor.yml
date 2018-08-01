@@ -9,7 +9,8 @@ environment:
     CONAN_USERNAME: "bryceschober"
     CONAN_LOGIN_USERNAME: "bryceschober"
     CONAN_CHANNEL: "testing"
-    
+    CONAN_UPLOAD: "https://api.bintray.com/conan/bryceschober/bks-conan"
+
     matrix:
         - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
           CONAN_VISUAL_VERSIONS: 12

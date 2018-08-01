@@ -4,7 +4,8 @@ variables:
     CONAN_REFERENCE: "CppUTest/master"
     CONAN_CHANNEL: "testing"
     CONAN_LOGIN_USERNAME: "bryceschober"
-    
+    CONAN_UPLOAD: "https://api.bintray.com/conan/bryceschober/bks-conan"
+
 .build-template: &build-template
     before_script:
         - sudo pip install --upgrade conan_package_tools

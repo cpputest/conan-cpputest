@@ -13,6 +13,7 @@ class CppUTest(ConanFile):
     options = {
         "shared": [True, False],
         "use_std_c_lib": [True, False],
+        "use_std_cpp_lib": [True, False],
         "fPIC": [True, False],
         "tests": [True, False],
         "extensions": [True, False]
@@ -20,6 +21,7 @@ class CppUTest(ConanFile):
     default_options = (
         "shared=False",
         "use_std_c_lib=True",
+        "use_std_cpp_lib=True",
         "fPIC=False",
         "tests=True",
         "extensions=True"
@@ -39,6 +41,7 @@ class CppUTest(ConanFile):
             cmake.verbose = True
         # Translate our options to CppUTest's cmake options
         cmake.definitions["STD_C"] = self.options.use_std_c_lib
+        cmake.definitions["STD_CPP"] = self.options.use_std_cpp_lib
         cmake.definitions["TESTS"] = self.options.tests
         cmake.configure(source_dir=os.path.join(self.source_folder, self.source_dir))
         return cmake

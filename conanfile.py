@@ -12,14 +12,12 @@ class CppUTest(ConanFile):
     source_dir = "{name}-{version}".format(name=name, version=version)
     options = {
         "shared": [True, False],
-        "include_pdbs": [True, False],
         "fPIC": [True, False],
         "tests": [True, False],
         "extensions": [True, False]
     }
     default_options = (
         "shared=False",
-        "include_pdbs=False",
         "fPIC=False",
         "tests=True",
         "extensions=True"

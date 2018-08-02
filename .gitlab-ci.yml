@@ -37,6 +37,12 @@ gcc-7:
         CONAN_GCC_VERSIONS: "7"
     <<: *build-template
 
+gcc-8:
+    image: lasote/conangcc8
+    variables:
+        CONAN_GCC_VERSIONS: "8"
+    <<: *build-template
+
 clang-3.9:
     image: lasote/conanclang39
     variables:

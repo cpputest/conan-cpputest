@@ -55,3 +55,9 @@ clang-4.0:
         CONAN_CLANG_VERSIONS: "4.0"
     <<: *build-template
 
+clang-5.0:
+    image: lasote/conanclang50
+    variables:
+        CONAN_CLANG_VERSIONS: "5.0"
+    <<: *build-template
+

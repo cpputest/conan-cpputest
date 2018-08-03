@@ -12,21 +12,21 @@ class CppUTest(ConanFile):
     source_dir = "{name}-{version}".format(name=name, version=version)
     options = {
         "shared": [True, False],
+        "fPIC": [True, False],
         "use_std_c_lib": [True, False],
         "use_std_cpp_lib": [True, False],
         "detect_mem_leaks": [True, False],
-        "fPIC": [True, False],
-        "tests": [True, False],
-        "extensions": [True, False]
+        "extensions": [True, False],
+        "tests": [True, False]
     }
     default_options = (
         "shared=False",
+        "fPIC=False",
         "use_std_c_lib=True",
         "use_std_cpp_lib=True",
         "detect_mem_leaks=True",
-        "fPIC=False",
-        "tests=True",
-        "extensions=True"
+        "extensions=True",
+        "tests=True"
     )
     scm = {
         "type": "git",
@@ -45,6 +45,7 @@ class CppUTest(ConanFile):
         cmake.definitions["STD_C"] = self.options.use_std_c_lib
         cmake.definitions["STD_CPP"] = self.options.use_std_cpp_lib
         cmake.definitions["MEMORY_LEAK_DETECTION"] = self.options.detect_mem_leaks
+        cmake.definitions["EXTENSIONS"] = self.options.extensions
         cmake.definitions["TESTS"] = self.options.tests
         cmake.configure(source_dir=os.path.join(self.source_folder, self.source_dir))
         return cmake

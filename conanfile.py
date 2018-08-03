@@ -15,6 +15,7 @@ class CppUTest(ConanFile):
         "fPIC": [True, False],
         "use_std_c_lib": [True, False],
         "use_std_cpp_lib": [True, False],
+        "use_cpp11": [True, False],
         "detect_mem_leaks": [True, False],
         "extensions": [True, False],
         "longlong": [True, False],
@@ -26,6 +27,7 @@ class CppUTest(ConanFile):
         "fPIC=False",
         "use_std_c_lib=True",
         "use_std_cpp_lib=True",
+        "use_cpp11=True",
         "detect_mem_leaks=True",
         "extensions=True",
         "longlong=True",
@@ -48,6 +50,7 @@ class CppUTest(ConanFile):
         # Translate our options to CppUTest's cmake options
         cmake.definitions["STD_C"] = self.options.use_std_c_lib
         cmake.definitions["STD_CPP"] = self.options.use_std_cpp_lib
+        cmake.definitions["C++11"] = self.options.use_cpp11
         cmake.definitions["MEMORY_LEAK_DETECTION"] = self.options.detect_mem_leaks
         cmake.definitions["EXTENSIONS"] = self.options.extensions
         cmake.definitions["LONGLONG"] = self.options.longlong

@@ -17,6 +17,7 @@ class CppUTest(ConanFile):
         "use_std_cpp_lib": [True, False],
         "detect_mem_leaks": [True, False],
         "extensions": [True, False],
+        "longlong": [True, False],
         "tests": [True, False]
     }
     default_options = (
@@ -26,6 +27,7 @@ class CppUTest(ConanFile):
         "use_std_cpp_lib=True",
         "detect_mem_leaks=True",
         "extensions=True",
+        "longlong=True",
         "tests=True"
     )
     scm = {
@@ -46,6 +48,7 @@ class CppUTest(ConanFile):
         cmake.definitions["STD_CPP"] = self.options.use_std_cpp_lib
         cmake.definitions["MEMORY_LEAK_DETECTION"] = self.options.detect_mem_leaks
         cmake.definitions["EXTENSIONS"] = self.options.extensions
+        cmake.definitions["LONGLONG"] = self.options.longlong
         cmake.definitions["TESTS"] = self.options.tests
         cmake.configure(source_dir=os.path.join(self.source_folder, self.source_dir))
         return cmake

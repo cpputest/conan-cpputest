@@ -13,26 +13,26 @@ class CppUTest(ConanFile):
     options = {
         "shared": [True, False],
         "fPIC": [True, False],
-        "use_std_c_lib": [True, False],
-        "use_std_cpp_lib": [True, False],
-        "use_cpp11": [True, False],
-        "detect_mem_leaks": [True, False],
-        "extensions": [True, False],
-        "longlong": [True, False],
-        "coverage": [True, False],
-        "tests": [True, False]
+        "use_std_c_lib": ["ON", "OFF"],
+        "use_std_cpp_lib": ["ON", "OFF"],
+        "use_cpp11": ["ON", "OFF"],
+        "detect_mem_leaks": ["ON", "OFF"],
+        "extensions": ["ON", "OFF"],
+        "longlong": ["ON", "OFF"],
+        "coverage": ["ON", "OFF"],
+        "tests": ["ON", "OFF"]
     }
     default_options = (
         "shared=False",
         "fPIC=False",
-        "use_std_c_lib=True",
-        "use_std_cpp_lib=True",
-        "use_cpp11=True",
-        "detect_mem_leaks=True",
-        "extensions=True",
-        "longlong=True",
-        "coverage=False",
-        "tests=True"
+        "use_std_c_lib=ON",
+        "use_std_cpp_lib=ON",
+        "use_cpp11=ON",
+        "detect_mem_leaks=ON",
+        "extensions=ON",
+        "longlong=ON",
+        "coverage=OFF",
+        "tests=ON"
     )
     scm = {
         "type": "git",
@@ -56,6 +56,7 @@ class CppUTest(ConanFile):
         cmake.definitions["LONGLONG"] = self.options.longlong
         cmake.definitions["COVERAGE"] = self.options.coverage
         cmake.definitions["TESTS"] = self.options.tests
+        #self.output.info("definitions={}".format(cmake.definitions))
         cmake.configure(source_dir=os.path.join(self.source_folder, self.source_dir))
         return cmake
 

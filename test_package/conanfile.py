@@ -5,7 +5,6 @@ from conans import ConanFile, CMake, tools
 
 class CpputestTestConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
-    requires = "CppUTest/master@bschober/testing"
     generators = "cmake"
 
     def build(self):

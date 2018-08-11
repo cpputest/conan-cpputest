@@ -11,7 +11,6 @@ class CppUTestTestConan(ConanFile):
         cmake = CMake(self)
         # Current dir is "test_package/build/<build_id>" and CMakeLists.txt is
         # in "test_package"
-        cmake.verbose = self.options.verbose
         cmake.configure()
         cmake.build()
 

@@ -3,17 +3,14 @@ import os
 from conans import ConanFile, CMake, tools
 
 
-class CpputestTestConan(ConanFile):
+class CppUTestTestConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
-    requires = "CppUTest/master@bschober/testing"
     generators = "cmake"
 
     def build(self):
         cmake = CMake(self)
         # Current dir is "test_package/build/<build_id>" and CMakeLists.txt is
         # in "test_package"
-        if os.environ.get('VERBOSE') == '1':
-            cmake.verbose = True
         cmake.configure()
         cmake.build()
 

@@ -7,4 +7,8 @@ if __name__ == "__main__":
         stable_branch_pattern="release*",
         channel="testing")
     builder.add_common_builds()
+    # Give us a foot-hold to manually test conan package options
+    for settings, options, env_vars, build_requires, reference in builder.items:
+        #options["CppUTest:coverage"] = 'ON'
+        pass
     builder.run()

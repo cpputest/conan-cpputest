@@ -12,17 +12,29 @@ class CppUTest(ConanFile):
     source_dir = "{name}-{version}".format(name=name, version=version)
     options = {
         "shared": [True, False],
-        "include_pdbs": [True, False],
         "fPIC": [True, False],
-        "tests": [True, False],
-        "extensions": [True, False]
+        "verbose": [True, False],
+        "use_std_c_lib": ["ON", "OFF"],
+        "use_std_cpp_lib": ["ON", "OFF"],
+        "use_cpp11": ["ON", "OFF"],
+        "detect_mem_leaks": ["ON", "OFF"],
+        "extensions": ["ON", "OFF"],
+        "longlong": ["ON", "OFF"],
+        "coverage": ["ON", "OFF"],
+        "tests": ["ON", "OFF"]
     }
     default_options = (
         "shared=False",
-        "include_pdbs=False",
         "fPIC=False",
-        "tests=True",
-        "extensions=True"
+        "verbose=False",
+        "use_std_c_lib=ON",
+        "use_std_cpp_lib=ON",
+        "use_cpp11=ON",
+        "detect_mem_leaks=ON",
+        "extensions=ON",
+        "longlong=ON",
+        "coverage=OFF",
+        "tests=ON"
     )
     scm = {
         "type": "git",
@@ -35,10 +47,17 @@ class CppUTest(ConanFile):
 
     def my_cmake(self):
         cmake = CMake(self, set_cmake_flags=True)
-        if os.environ.get('VERBOSE') == '1':
-            cmake.verbose = True
-        # Translate our test-enabling option to CppUTest's cmake option
+        cmake.verbose = self.options.verbose
+        # Translate our options to CppUTest's cmake options
+        cmake.definitions["STD_C"] = self.options.use_std_c_lib
+        cmake.definitions["STD_CPP"] = self.options.use_std_cpp_lib
+        cmake.definitions["C++11"] = self.options.use_cpp11
+        cmake.definitions["MEMORY_LEAK_DETECTION"] = self.options.detect_mem_leaks
+        cmake.definitions["EXTENSIONS"] = self.options.extensions
+        cmake.definitions["LONGLONG"] = self.options.longlong
+        cmake.definitions["COVERAGE"] = self.options.coverage
         cmake.definitions["TESTS"] = self.options.tests
+        #self.output.info("definitions={}".format(cmake.definitions))
         cmake.configure(source_dir=os.path.join(self.source_folder, self.source_dir))
         return cmake
 

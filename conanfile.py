@@ -45,7 +45,7 @@ class CppUTest(ConanFile):
     if version == "master":
         scm["revision"] = "master"
 
-    def my_cmake(self):
+    def _my_cmake(self):
         cmake = CMake(self, set_cmake_flags=True)
         cmake.verbose = self.options.verbose
         # Translate our options to CppUTest's cmake options
@@ -66,13 +66,13 @@ class CppUTest(ConanFile):
         pass
 
     def build(self):
-        cmake = self.my_cmake()
+        cmake = self._my_cmake()
         cmake.build()
         if self.options.tests:
             cmake.test()
 
     def package(self):
-        cmake = self.my_cmake()
+        cmake = self._my_cmake()
         cmake.install()
 
     def package_info(self):

@@ -1,3 +1,8 @@
+## DEPRECATED
+
+### *CppUTest is available through [**Conan Center**](https://conan.io/center/cpputest)*.
+
+
 # conan-cpputest
 
 [Conan.io](http://conan.io) recipe for [CppUTest](http://cpputest.github.io)
